@@ -35,6 +35,8 @@ const addMoreSave=async(req, res)=>{
         price:bookprice,
         autherid:authid
     })
+    const Auth=await AuthModel.findById(authid);
+    await AuthModel.findByIdAndUpdate(Auth._id, { $push: { books: Book._id } });
     res.send("OK Record Inserted!!!")
 }
 

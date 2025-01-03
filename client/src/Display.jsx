@@ -10,7 +10,6 @@ const Display=()=>{
         let api="http://localhost:8000/books/datadisplay";
         axios.get(api).then((res)=>{
             setMydata(res.data);
-            console.log(res.data);
         })
     }
 
@@ -18,8 +17,15 @@ const Display=()=>{
         loadData();
     }, [])
 
+    const handlemorebook=(id, name)=>{
+        navigator(`/addmorebook/${id}`,  {state: {authname: name}});
+    }
+    
+
 
     const ans=mydata.map(key=>{
+        let sr=0;
+
         return(
             <>
                <tr>
@@ -27,16 +33,19 @@ const Display=()=>{
                 <td> 
 
 
-                 {key.books.map(key1=>{
+                 { 
+                 key.books.map(key1=>{
+                    
+
                     return(
                         <>
-                           <p> title:  {key1.booktitle}  Price : {key1.price} </p>
+                           <p> {++sr}) title:  {key1.booktitle}  Price : {key1.price} </p>
                         </>
                     )
                  })}
 
                 </td>
-                <td><button onClick={()=>{navigator(`/addmorebook/${key._id}`)}}>Add More Book</button></td>
+                <td><button onClick={()=>{handlemorebook(key._id, key.authername)}}>Add More Book</button></td>
               
                </tr>
             
@@ -50,6 +59,7 @@ const Display=()=>{
             <tr>
                 <th> Authername</th>
                 <th>Detail </th>
+                <th>Add More Book</th>
             </tr>
             {ans}
           </table>
